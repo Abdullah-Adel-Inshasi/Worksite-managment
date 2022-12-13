@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="flex flex-col justify-center items-center mx-5 py-6">
+  <span class="text-3xl mb-4">Work Order of ID 3 Work Items Details</span>
+  <table class="table-fixed w-full">
+    <thead>
+      <tr class="text-center">
+        <th class="bg-slate-300 w-10">id</th>
+        <th class="bg-slate-300 w-[1/5]">Description</th>
+        <th class="bg-slate-300 w-[1/5]">Location</th>
+        <th class="bg-slate-300 w-[1/5]">Progress</th>
+        <th
+          class="bg-slate-300 w-[1/5]"
+          *ngIf="userService.user === 'Site Engineer'"
+        >
+          Remove
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of workItems">
+        <td class="border border-slate-300 text-center">{{ item.id }}</td>
+        <td class="border border-slate-300 overflow-clip">
+          <p>
+            {{ item.description }}
+          </p>
+        </td>
+        <td class="border border-slate-300">{{ item.location }}</td>
+        <td class="border border-slate-300">
+          <div class="flex justify-center items-center">
+            <div class="flex flex-row">
+              <span>%</span>
+              <input
+                type="number"
+                class="w-full h-full ml-2"
+                name="progress"
+                id="{{ item.id }}"
+                [(ngModel)]="item.progress"
+                max="100"
+                min="0"
+              />
+            </div>
+          </div>
+        </td>
+        <td
+          class="border border-slate-300"
+          *ngIf="userService.user === 'Site Engineer'"
+        >
+          <div class="flex justify-center items-center">
+            <button
+              (click)="removeWorkItem(item.id)"
+              class="bg-sky-100 hover:bg-sky-400 p-2 rounded-lg hover:text-white"
+            >
+              Remove
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="bg-blue-300 rounded-md px-3 py-2 mt-3" (click)="save()">
+    Save Changes
+  </button>
+</div>

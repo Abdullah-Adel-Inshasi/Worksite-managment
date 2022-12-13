@@ -1,0 +1,14 @@
+<app-header></app-header>
+<div class="px-4 py-9 bg-slate-100">
+  <div class="flex flex-row justify-end">
+    <a routerLink="/add-order" *ngIf="userType === 'Site Engineer'">
+      Add Work Items
+    </a>
+  </div>
+  <div class="flex flex-col gap-y-5 items-center">
+    <app-work-order
+      *ngFor="let order of workOrdersService.workOrders"
+      [workOrder]="order"
+    ></app-work-order>
+  </div>
+</div>

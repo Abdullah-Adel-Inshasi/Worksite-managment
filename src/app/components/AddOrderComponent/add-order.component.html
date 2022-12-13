@@ -1,0 +1,122 @@
+<app-header></app-header>
+<div class="flex flex-col mx-10 mb-10">
+  <h2 class="text-2xl text-center mt-6 font-mono">Add Work Order</h2>
+  <form class="mt-10" [formGroup]="addWorkOrderForm">
+    <div formGroupName="header">
+      <label for="Description" class="block mb-2">Order Description</label>
+      <textarea
+        type="text"
+        [class.border-red-400]="
+          operationDescription?.invalid && operationDescription?.touched
+        "
+        class="border w-full rounded-lg"
+        rows="4"
+        formControlName="operationDescription"
+      ></textarea>
+      <span
+        *ngIf="operationDescription?.errors?.['required']"
+        class="text-red-400"
+        [class.hidden]="
+          operationDescription?.valid || operationDescription?.untouched
+        "
+        >Description is required</span
+      >
+      <span
+        *ngIf="operationDescription?.errors?.['minlength']"
+        class="text-red-400"
+        [class.hidden]="
+          operationDescription?.valid || operationDescription?.untouched
+        "
+        >Description must be at least 20 letter long</span
+      >
+      <div class="flex justify-evenly mt-6">
+        <div>
+          <label for="startDate" class="block mb-2">Start Date</label>
+          <input
+            type="date"
+            #startDate
+            formControlName="startDate"
+            id="startDate"
+          />
+        </div>
+        <div>
+          <label for="endDate" class="block mb-2">End Date</label>
+          <input
+            type="date"
+            [min]="startDate.value"
+            formControlName="endDate"
+            id="endDate"
+          />
+        </div>
+      </div>
+    </div>
+    <div id="work items ">
+      <div
+        formArrayName="workItems"
+        *ngFor="let item of workItems.controls; let i = index"
+        class="mb-4"
+      >
+        <div
+          [formGroupName]="i"
+          class="w-full border border-sky-400 rounded-lg flex flex-row items-start p-4 shadow-lg"
+        >
+          <div class="flex flex-col">
+            <label for="description-{{ i }}" class="block mb-2"
+              >Item Description</label
+            >
+            <button (click)="print(item)">print</button>
+            <textarea
+              formControlName="description"
+              id="description-{{ i }}"
+              rows="3"
+              [class.border-red-400]="
+                workItems.at(i).invalid && workItems.at(i).touched
+              "
+              cols="50"
+              class="border rounded-lg p-2"
+              placeholder="Add description for the item with deliverables"
+            ></textarea>
+            <span
+              *ngIf="workItemsControl(i)?.controls?.['description']?.errors?.['required']"
+              [class.hidden]="
+                workItems.at(i).errors || workItems.at(i).untouched
+              "
+              class="text-red-400"
+              >Add a Description</span
+            >
+            <span
+              *ngIf="workItemsControl(i)?.controls?.['description']?.errors?.['minlength']"
+              [class.hidden]="
+                workItems.at(i).valid || workItems.at(i).untouched
+              "
+              class="text-red-400"
+              >Must be 20 letters long</span
+            >
+          </div>
+          <div>
+            <label for="location-{{ i }}" class="block">Location</label>
+            <select formControlName="location" class="inline-block">
+              <option value="{{ location }}" *ngFor="let location of locations">
+                {{ location }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="flex space-x-6">
+        <button
+          (click)="addWorkItem()"
+          class="text-sky-400 border border-sky-500 p-2 rounded-lg"
+        >
+          Add New Item
+        </button>
+        <button
+          (click)="addOrder()"
+          class="text-sky-400 border border-sky-500 p-2 rounded-lg"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
