@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/UserService/user.service';
 })
 export class WorkOrderDetailsComponent implements OnInit {
   workItems!: WorkItem[];
-  id = this.route.snapshot.paramMap.get('id');
+  workOrderId = this.route.snapshot.paramMap.get('id');
   constructor(
     private route: ActivatedRoute,
     private workOrdersService: WorkOrdersService,
@@ -21,14 +21,17 @@ export class WorkOrderDetailsComponent implements OnInit {
   ) {}
 
   save() {
-    this.workOrdersService.updateProgress(Number(this.id), this.workItems);
+    this.workOrdersService.updateProgress(
+      Number(this.workOrderId),
+      this.workItems
+    );
     this.location.back();
   }
 
   removeWorkItem(workItemId: number) {
     const result = this.workOrdersService.removeWorkItem(
       workItemId,
-      Number(this.id)
+      Number(this.workOrderId)
     );
     if (typeof result === 'string') {
       alert(result);
@@ -38,14 +41,17 @@ export class WorkOrderDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('nice');
-    if (this.id === null) {
-      this.router.navigateByUrl('404/orderNotFound');
+    if (this.workOrderId === null) {
+      this.router.navigateByUrl('/404');
     }
     if (this.userService.user === null) {
       this.router.navigateByUrl('login');
     }
-    const workItems = this.workOrdersService.getWorkItems(+this.id!);
+    const workItems = this.workOrdersService.getWorkItems(+this.workOrderId!);
+    if (workItems === undefined) {
+      this.router.navigateByUrl('/404/orderNotFound');
+      return;
+    }
     this.workItems = [...workItems];
   }
 }
