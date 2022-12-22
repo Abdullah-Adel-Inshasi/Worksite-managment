@@ -1,25 +1,26 @@
-<header class="py-3 px-6 bg-slate-50 flex justify-between">
-  <a
-    class="flex rounded-lg space-x-3 border border-slate-300 px-3 py-1 bg-gray-400 text-white"
-    routerLink="/dashboard"
-  >
-    <img src="assets\building.svg" class="w-5 h-5" />
-    <p>Jim for Construction</p>
-  </a>
-  <p>{{ title }}</p>
-  <button
-    *ngIf="userService.user; else loginBlock"
-    (click)="logOut()"
-    class="border border-sky-400 text-sky-400 hover:bg-sky-500 hover:text-white p-2 rounded-md"
-  >
-    Log Out
-  </button>
-  <ng-template #loginBlock>
-    <button
-      (click)="login()"
-      class="border border-sky-400 text-sky-400 hover:bg-sky-500 hover:text-white p-2 rounded-md"
+<nav class="bg-gray-800 py-3 px-4 flex items-center justify-between">
+  <a routerLink="/dashboard" class="flex items-center">
+    <img
+      src="https://png.pngtree.com/template/20191014/ourmid/pngtree-building-and-construction-logo-design-template-image_317780.jpg"
+      alt="Construction Company Logo"
+      class="h-8 w-8 rounded-full bg-blend-multiply"
+    />
+    <span class="ml-2 text-white font-semibold text-xl tracking-tight"
+      >Construction Site management</span
     >
-      Log In
+  </a>
+  <div class="flex items-center">
+    <button
+      *ngIf="userService.user && userService.user === 'Site Engineer'"
+      class="px-4 py-2 font-semibold rounded-full text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+    >
+      <a routerLink="/add-order"> Add Task </a>
     </button>
-  </ng-template>
-</header>
+    <button
+      class="ml-4 px-4 py-2 font-semibold rounded-full text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+      (click)="userService.user ? logOut() : login()"
+    >
+      {{ userService.user ? "Logout" : "Login" }}
+    </button>
+  </div>
+</nav>

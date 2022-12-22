@@ -1,28 +1,72 @@
 <div
-  class="flex flex-col px-6 py-4 w-[42rem] border border-slate-300 shadow-xl rounded-md bg-white"
+  *ngIf="workOrder"
+  class="bg-white mx-4 rounded-lg shadow-lg overflow-hidden"
 >
-  <div class="font-semibold tracking-wide">Progress : %{{ average }}</div>
-  <div class="w-full bg-white border border-black relative h-2 flex">
-    <div
-      class="bg-rose-500 absolute top-0 h-full"
-      [style.width.%]="average"
-    ></div>
+  <div class="px-6 py-4 w-[42rem]">
+    <div class="font-bold text-xl mb-2">Task Details</div>
+    <p class="text-gray-700 text-base my-4">
+      Overall Progress: <span class="font-bold">{{ average }}%</span>
+    </p>
+    <div class="flex items-center mb-4">
+      <div
+        *ngIf="tasksStatus.finished"
+        [style.width.%]="
+          (tasksStatus.finished / workOrder.workItems.length) * 100
+        "
+        class="h-4 relative flex justify-center items-center bg-green-500 rounded-l-full"
+      >
+        <span
+          class="text-xs whitespace-nowrap text-gray-800 font-bold absolute mr-2"
+          >Finished</span
+        >
+      </div>
+      <div
+        *ngIf="tasksStatus.inProgress"
+        [style.width.%]="
+          (tasksStatus.inProgress / workOrder.workItems.length) * 100
+        "
+        class="h-4 relative flex justify-center items-center bg-yellow-500"
+      >
+        <span
+          class="text-xs whitespace-nowrap text-gray-800 font-bold absolute mr-2"
+          >In-Progress</span
+        >
+      </div>
+      <div
+        *ngIf="tasksStatus.toDo"
+        [style.width.%]="(tasksStatus.toDo / workOrder.workItems.length) * 100"
+        class="h-4 relative flex justify-center items-center bg-red-500 rounded-r-full"
+      >
+        <span
+          class="text-xs whitespace-nowrap text-gray-800 font-bold absolute mr-2"
+          >Not Started</span
+        >
+      </div>
+    </div>
+    <p class="text-gray-700 text-base">
+      Description:
+      <span class="font-bold">{{ workOrder.header.operationDescription }}</span
+      ><br />
+      Estimated Time:
+      <span class="font-bold">{{ daysLeftEstimation }} days</span><br />
+      Subtasks:
+      <span class="font-bold text-green-500"
+        >{{ tasksStatus.finished }} finished</span
+      >,
+      <span class="font-bold text-yellow-500"
+        >{{ tasksStatus.inProgress }} in-progress</span
+      >,
+      <span class="font-bold text-red-500"
+        >{{ tasksStatus.toDo }} not started</span
+      >
+    </p>
   </div>
-  <div class="text-center font-bold mt-3">
-    Number of Tasks : {{ workOrder?.workItems?.length }}
+  <div class="px-6 py-4">
+    <a
+      class="px-4 py-2 font-semibold rounded-full text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+      routerLink="/details/{{ workOrder.header.id }}"
+    >
+      View Details
+    </a>
   </div>
-  <div class="flex items-center gap-x-2">
-    <div class="font-medium">Time Estimation:</div>
-    <div>{{ estimatedTime }} days</div>
-  </div>
-  <div class="my-4">
-    <h2 class="font-semibold">Description</h2>
-    <p>{{ workOrder?.header?.operationDescription }}</p>
-  </div>
-  <button
-    *ngIf="workOrder"
-    class="self-start text-sky-400 border-sky-500 border px-2 py-1 rounded-md hover:bg-sky-500 hover:text-white"
-  >
-    <a routerLink="/details/{{ workOrder.header.id }}">View details</a>
-  </button>
 </div>

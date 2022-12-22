@@ -1,16 +1,18 @@
-<app-header></app-header>
-<div class="flex flex-col mx-10 mb-10">
-  <h2 class="text-2xl text-center mt-6 font-mono">Add Work Order</h2>
-  <form class="mt-10" [formGroup]="addWorkOrderForm">
-    <div formGroupName="header">
-      <label for="Description" class="block mb-2">Order Description</label>
+<h2 class="text-2xl text-center mt-6 font-mono">Add Work Order</h2>
+<form class="mx-auto max-w-lg mt-6" [formGroup]="addWorkOrderForm">
+  <div formGroupName="header">
+    <div class="mb-4">
+      <label class="block font-bold text-white text-sm mb-2" for="description">
+        Description
+      </label>
       <textarea
-        type="text"
+        class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+        id="description"
+        rows="3"
+        placeholder="Enter Description"
         [class.border-red-400]="
           operationDescription?.invalid && operationDescription?.touched
         "
-        class="border w-full rounded-lg"
-        rows="4"
         formControlName="operationDescription"
       ></textarea>
       <span
@@ -29,94 +31,127 @@
         "
         >Description must be at least 20 letter long</span
       >
-      <div class="flex justify-evenly mt-6">
-        <div>
-          <label for="startDate" class="block mb-2">Start Date</label>
+    </div>
+    <div class="flex justify-between mt-6">
+      <div>
+        <div class="mb-4">
+          <label
+            class="block font-bold text-white text-sm mb-2"
+            for="start-date"
+          >
+            Start Date
+          </label>
           <input
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            id="start-date"
             type="date"
-            #startDate
+            placeholder="Enter Start Date"
             formControlName="startDate"
-            id="startDate"
+            #startDate
           />
         </div>
-        <div>
-          <label for="endDate" class="block mb-2">End Date</label>
+      </div>
+      <div>
+        <div class="mb-4">
+          <label class="block font-bold text-white text-sm mb-2" for="end-date">
+            End Date
+          </label>
           <input
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            id="end-date"
             type="date"
+            placeholder="Enter End Date"
             [min]="startDate.value"
             formControlName="endDate"
-            id="endDate"
           />
         </div>
       </div>
     </div>
-    <div id="work items ">
+  </div>
+  <div id="work items ">
+    <div
+      formArrayName="workItems"
+      *ngFor="let item of workItems.controls; let i = index"
+      class="mb-4"
+    >
       <div
-        formArrayName="workItems"
-        *ngFor="let item of workItems.controls; let i = index"
-        class="mb-4"
+        [formGroupName]="i"
+        class="border-solid border-indigo-500 bg-white bg-opacity-10 border-2 rounded-md p-4"
       >
-        <div
-          [formGroupName]="i"
-          class="w-full border border-sky-400 rounded-lg flex flex-row items-start p-4 shadow-lg"
-        >
-          <div class="flex flex-col">
-            <label for="description-{{ i }}" class="block mb-2"
-              >Item Description</label
+        <div class="flex items-end justify-end">
+          <button
+            class="px-2 py-px self-end rounded-full text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:shadow-outline-blue"
+            (click)="deleteWorkItem(i)"
+          >
+            Remove Item
+          </button>
+        </div>
+        <div class="mb-4">
+          <label
+            class="block font-bold text-white text-sm mb-2"
+            for="description-{{ i }}"
+          >
+            Description
+          </label>
+          <textarea
+            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            id="description"
+            rows="3"
+            placeholder="Enter Description"
+            formControlName="description"
+            id="description-{{ i }}"
+            [class.border-red-400]="
+              workItems.at(i).invalid && workItems.at(i).touched
+            "
+          ></textarea>
+          <span
+            *ngIf="workItemsControl(i)?.controls?.['description']?.errors?.['required']"
+            [class.hidden]="workItems.at(i).errors || workItems.at(i).untouched"
+            class="text-red-400"
+            >Add a Description</span
+          >
+          <span
+            *ngIf="workItemsControl(i)?.controls?.['description']?.errors?.['minlength']"
+            [class.hidden]="workItems.at(i).valid || workItems.at(i).untouched"
+            class="text-red-400"
+            >Must be 20 letters long</span
+          >
+        </div>
+        <div>
+          <div class="mb-4">
+            <label
+              class="block font-bold text-white text-sm mb-2"
+              for="location-{{ i }}"
             >
-            <button (click)="print(item)">print</button>
-            <textarea
-              formControlName="description"
-              id="description-{{ i }}"
-              rows="3"
-              [class.border-red-400]="
-                workItems.at(i).invalid && workItems.at(i).touched
-              "
-              cols="50"
-              class="border rounded-lg p-2"
-              placeholder="Add description for the item with deliverables"
-            ></textarea>
-            <span
-              *ngIf="workItemsControl(i)?.controls?.['description']?.errors?.['required']"
-              [class.hidden]="
-                workItems.at(i).errors || workItems.at(i).untouched
-              "
-              class="text-red-400"
-              >Add a Description</span
+              Location
+            </label>
+            <select
+              class="block appearance-none w-full bg-gray-200 border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              id="location-{{ i }}"
+              formControlName="location"
             >
-            <span
-              *ngIf="workItemsControl(i)?.controls?.['description']?.errors?.['minlength']"
-              [class.hidden]="
-                workItems.at(i).valid || workItems.at(i).untouched
-              "
-              class="text-red-400"
-              >Must be 20 letters long</span
-            >
-          </div>
-          <div>
-            <label for="location-{{ i }}" class="block">Location</label>
-            <select formControlName="location" class="inline-block">
               <option value="{{ location }}" *ngFor="let location of locations">
                 {{ location }}
               </option>
             </select>
           </div>
+          <!--  -->
         </div>
       </div>
-      <div class="flex space-x-6">
-        <button
-          (click)="addWorkItem()"
-          class="text-sky-400 border border-sky-500 p-2 rounded-lg"
-        >
-          Add New Item
-        </button>
-        <button
-          (click)="addOrder()"
-          class="text-sky-400 border border-sky-500 p-2 rounded-lg"
-        >
-          Save
-        </button>
-      </div>
     </div>
-  </form>
-</div>
+    <div class="flex justify-between">
+      <button
+        (click)="addWorkItem()"
+        class="px-4 py-2 self-end rounded-full text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+      >
+        Add New Item
+      </button>
+      <button
+        (click)="addOrder()"
+        class="px-4 py-2 self-end rounded-full text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+      >
+        Create Order
+      </button>
+    </div>
+  </div>
+</form>
