@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserType } from 'src/app/types/WorkOrder';
 
 @Component({
   selector: 'app-root',

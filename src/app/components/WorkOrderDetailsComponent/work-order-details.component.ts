@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkOrdersService } from 'src/app/services/WorkOrdersService/work-orders.service';
-import { WorkItem } from 'src/app/types/WorkOrder';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/services/UserService/user.service';
 @Component({
@@ -43,15 +42,19 @@ export class WorkOrderDetailsComponent implements OnInit {
   ngOnInit(): void {
     if (this.workOrderId === null) {
       this.router.navigateByUrl('/404');
+      return;
     }
     if (this.userService.user === null) {
       this.router.navigateByUrl('login');
+      return;
     }
+
     const workItems = this.workOrdersService.getWorkItems(+this.workOrderId!);
     if (workItems === undefined) {
       this.router.navigateByUrl('/404/orderNotFound');
       return;
     }
+
     this.workItems = [...workItems];
   }
 }

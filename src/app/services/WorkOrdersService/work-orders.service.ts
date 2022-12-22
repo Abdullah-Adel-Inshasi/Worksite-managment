@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { average } from 'src/app/helpers/utils';
-import { WorkItem, WorkOrder } from 'src/app/types/WorkOrder';
 @Injectable({
   providedIn: 'root',
 })

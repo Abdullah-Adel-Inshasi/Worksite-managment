@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserType } from 'src/app/types/WorkOrder';
 import { UserService } from '../UserService/user.service';
 
 @Injectable({
