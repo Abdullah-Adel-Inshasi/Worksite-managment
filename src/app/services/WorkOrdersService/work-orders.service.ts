@@ -9,48 +9,30 @@ export class WorkOrdersService {
     {
       header: {
         id: 1,
-        progress: 0,
-        creationDate: '',
-        endDate: '',
-        operationDescription:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        startDate: '',
+        creationDate: '2022-01-01',
+        startDate: '2022-01-02',
+        endDate: '2022-01-03',
+        progress: 50,
+        operationDescription: 'Repair the roof',
       },
       workItems: [
         {
-          id: 0,
-          description:
-            ' RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR v RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR ',
+          description: 'Replace damaged tiles',
           location: 'Roof',
-          progress: 40,
-        },
-        {
-          id: 1,
-          description:
-            ' RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR v RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR ',
-          location: 'Second Floor',
-          progress: 44,
-        },
-        {
-          id: 2,
-          description:
-            ' RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR v RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR ',
-          location: 'Tile',
-          progress: 0,
-        },
-        {
-          id: 3,
-          description:
-            ' RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR v RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR ',
-          location: 'Tile',
           progress: 75,
+          id: 1,
         },
         {
-          id: 4,
-          description:
-            ' RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR v RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR RRRRRRRRRRRRRRRRRRRRRRRRRRRRR ',
+          description: 'Fix leak in the roof',
+          location: 'Roof',
+          progress: 25,
+          id: 2,
+        },
+        {
+          description: 'Paint the walls',
           location: '1st Floor',
-          progress: 100,
+          progress: 50,
+          id: 3,
         },
       ],
     },
@@ -70,7 +52,7 @@ export class WorkOrdersService {
       }
       return Array.from([...order.workItems]);
     } catch (error) {
-      return [];
+      return undefined;
     }
   }
   updateProgress(headerId: number, workItems: WorkItem[]) {
@@ -85,7 +67,7 @@ export class WorkOrdersService {
 
   getTotalProgress(workItems: WorkItem[]): number {
     const progresses = workItems.map((item) => item.progress);
-    return average(...progresses);
+    return +average(...progresses).toFixed(0);
   }
 
   addWorkItem(workItem: WorkItem, headerId: number) {
