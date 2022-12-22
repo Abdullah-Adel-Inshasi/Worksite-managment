@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { formatDate } from 'src/app/helpers/utils';
-import { LocationTypes, WorkOrder } from 'src/app/types/WorkOrder';
 import { WorkOrdersService } from 'src/app/services/WorkOrdersService/work-orders.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/UserService/user.service';
@@ -45,12 +44,11 @@ export class AddOrderComponent implements OnInit {
   get workItems() {
     return this.addWorkOrderForm.get('workItems') as FormArray;
   }
-  print(x: any) {
-    console.log(x);
-  }
   addOrder() {
     if (!this.addWorkOrderForm.value.workItems?.length) {
-      alert('add items');
+      alert('The Work Order must have at least one work Item');
+    } else if (!this.addWorkOrderForm.valid) {
+      alert('Please fill all fields');
     } else {
       this.workOrderService.addWorkOrder(this.addWorkOrderForm.value);
       this.router.navigateByUrl('dashboard', { replaceUrl: true });
@@ -70,6 +68,10 @@ export class AddOrderComponent implements OnInit {
         progress: 0,
       })
     );
+  }
+
+  deleteWorkItem(index: number) {
+    this.workItems.removeAt(index);
   }
 
   locations: LocationTypes[] = ['1st Floor', 'Roof', 'Second Floor', 'Tile'];
