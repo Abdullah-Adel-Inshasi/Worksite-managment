@@ -1,6 +1,6 @@
-export type UserType = 'Site Engineer' | 'Foreman';
+type UserType = 'Site Engineer' | 'Foreman';
 
-export interface WorkOrder {
+interface WorkOrder {
   header: {
     id: number;
     creationDate: string;
@@ -12,11 +12,11 @@ export interface WorkOrder {
   workItems: WorkItem[];
 }
 
-export interface WorkItem {
+interface WorkItem {
   description: string;
   location: LocationTypes;
   progress: number;
   id: number;
 }
 
-export type LocationTypes = 'Roof' | 'Tile' | '1st Floor' | 'Second Floor';
+type LocationTypes = 'Roof' | 'Tile' | '1st Floor' | 'Second Floor';
