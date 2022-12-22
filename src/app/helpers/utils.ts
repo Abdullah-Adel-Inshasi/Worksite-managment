@@ -12,7 +12,7 @@ export function dateDiffInDays(date1: Date, date2: Date) {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
-export const formatDate = (date:Date) => {
+export const formatDate = (date: Date) => {
   const d = new Date(date);
   let month = '' + (d.getMonth() + 1);
   let day = '' + d.getDate();
