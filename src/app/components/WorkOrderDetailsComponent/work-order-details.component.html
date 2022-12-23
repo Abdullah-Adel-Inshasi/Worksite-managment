@@ -1,6 +1,8 @@
 <div class="flex flex-col justify-center items-center mx-5 my-6">
   <span class="text-3xl mb-4">Work Order of ID 3 Work Items Details</span>
-  <table class="table-fixed w-full bg-white bg-opacity-30 rounded-lg shadow-md">
+  <table
+    class="table-fixed w-full bg-white bg-opacity-30 rounded-lg overflow-clip shadow-md"
+  >
     <thead class="bg-gray-600 text-white">
       <tr>
         <th class="px-4 py-2 w-11">ID</th>
@@ -28,7 +30,7 @@
           <input
             #input_i
             type="range"
-            class="block w-full appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded-lg leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer "
             min="0"
             max="100"
             step="1"

@@ -7,13 +7,15 @@
     <p class="text-gray-700 text-base my-4">
       Overall Progress: <span class="font-bold">{{ average }}%</span>
     </p>
-    <div class="flex items-center mb-4">
+    <div
+      class="flex items-center mb-4"
+    >
       <div
         *ngIf="tasksStatus.finished"
         [style.width.%]="
           (tasksStatus.finished / workOrder.workItems.length) * 100
         "
-        class="h-4 relative flex justify-center items-center bg-green-500 rounded-l-full"
+        class="h-4 relative flex justify-center items-center bg-green-500 first:rounded-l-full last:rounded-r-full"
       >
         <span
           class="text-xs whitespace-nowrap text-gray-800 font-bold absolute mr-2"
@@ -25,7 +27,7 @@
         [style.width.%]="
           (tasksStatus.inProgress / workOrder.workItems.length) * 100
         "
-        class="h-4 relative flex justify-center items-center bg-yellow-500"
+        class="h-4 relative flex justify-center items-center bg-yellow-500 first:rounded-l-full last:rounded-r-full"
       >
         <span
           class="text-xs whitespace-nowrap text-gray-800 font-bold absolute mr-2"
@@ -35,7 +37,7 @@
       <div
         *ngIf="tasksStatus.toDo"
         [style.width.%]="(tasksStatus.toDo / workOrder.workItems.length) * 100"
-        class="h-4 relative flex justify-center items-center bg-red-500 rounded-r-full"
+        class="h-4 relative flex justify-center items-center bg-red-500 first:rounded-l-full last:rounded-r-full"
       >
         <span
           class="text-xs whitespace-nowrap text-gray-800 font-bold absolute mr-2"
