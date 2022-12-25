@@ -40,16 +40,18 @@ export class WorkOrderDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.workOrderId === null) {
-      this.router.navigateByUrl('/404');
-      return;
-    }
     if (this.userService.user === null) {
       this.router.navigateByUrl('login');
       return;
     }
 
-    const workItems = this.workOrdersService.getWorkItems(+this.workOrderId!);
+    if (this.workOrderId === null) {
+      this.router.navigateByUrl('/404');
+      return;
+    }
+
+    const workItems = this.workOrdersService.getWorkItems(+this.workOrderId);
+
     if (workItems === undefined) {
       this.router.navigateByUrl('/404/orderNotFound');
       return;

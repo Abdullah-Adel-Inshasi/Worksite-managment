@@ -1,5 +1,8 @@
 <div class="flex flex-col justify-center items-center mx-5 my-6">
-  <span class="text-3xl mb-4">Work Order of ID 3 Work Items Details</span>
+  <span class="text-3xl mb-4"
+    >Work Order of ID
+    <span class="font-semibold">{{ workOrderId }}</span> Details</span
+  >
   <table
     class="table-fixed w-full bg-white bg-opacity-30 rounded-lg overflow-clip shadow-md"
   >
@@ -30,10 +33,10 @@
           <input
             #input_i
             type="range"
-            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer "
+            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
             min="0"
             max="100"
-            step="1"
+            step="5"
             [(ngModel)]="item.progress"
           />
         </td>
